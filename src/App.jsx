@@ -7,12 +7,14 @@ function App() {
 	const [id, setId] = useState(1);
 
 	const handleInputTodos = (value) => {
-		setId(id + 1);
-		setData([...data, { id: id, todo: value }]);
-		localStorage.setItem(
-			"todo",
-			JSON.stringify([...data, { id: id, todo: value }])
-		);
+		if (value) {
+			setId(id + 1);
+			setData([...data, { id: id, todo: value }]);
+			localStorage.setItem(
+				"todo",
+				JSON.stringify([...data, { id: id, todo: value }])
+			);
+		}
 	};
 
 	useEffect(() => {

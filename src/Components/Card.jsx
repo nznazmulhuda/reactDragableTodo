@@ -14,7 +14,7 @@ function Card({ todo, reference }) {
 	return (
 		<motion.div
 			drag
-            dragConstraints={reference}
+			dragConstraints={reference}
 			className="card w-96 bg-base-100 shadow-xl"
 		>
 			<div className="card-body">
@@ -27,16 +27,10 @@ function Card({ todo, reference }) {
 				<p className="mt-5">{todos.todo}</p>
 				<div className="card-actions justify-end mt-10">
 					<button
-						onClick={() => setIsComplete(true)}
+						onClick={() => setIsComplete(!isComplete)}
 						className="btn btn-ghost py-2 px-4"
 					>
-						Complete
-					</button>
-					<button
-						onClick={() => setIsComplete(false)}
-						className="btn btn-ghost py-2 px-4"
-					>
-						Incomplete
+						{isComplete ? "Incomplete" : "Complete"}
 					</button>
 				</div>
 			</div>
