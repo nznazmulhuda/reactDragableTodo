@@ -6,13 +6,53 @@ function App() {
 	const [data, setData] = useState([]);
 	const [id, setId] = useState(1);
 
+	const date = new Date();
+	const day = [
+		"Sunday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+	];
+
 	const handleInputTodos = (value) => {
 		if (value) {
 			setId(id + 1);
-			setData([...data, { id: id, todo: value }]);
+			setData([
+				...data,
+				{
+					id: id,
+					todo: value,
+					date: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}, ${
+						day[date.getUTCDay()]
+					}`,
+					time: `${date.toLocaleString("en-US", {
+						hour: "numeric",
+						minute: "numeric",
+						hour12: true,
+					})}`,
+				},
+			]);
+
 			localStorage.setItem(
 				"todo",
-				JSON.stringify([...data, { id: id, todo: value }])
+				JSON.stringify([
+					...data,
+					{
+						id: id,
+						todo: value,
+						date: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}, ${
+							day[date.getUTCDay()]
+						}`,
+						time: `${date.toLocaleString("en-US", {
+							hour: "numeric",
+							minute: "numeric",
+							hour12: true,
+						})}`,
+					},
+				])
 			);
 		}
 	};

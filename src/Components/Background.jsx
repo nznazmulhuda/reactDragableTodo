@@ -12,7 +12,7 @@ function Background({ handleInputTodos }) {
 				<motion.div
 					drag
 					dragConstraints={refer}
-					className="flex items-center justify-center w-1/2 pt-10 gap-5"
+					className="flex items-center justify-center lg:w-1/2 pt-10 gap-5"
 				>
 					<input
 						className="border rounded-xl border-zinc-800 w-1/2 outline-none bg-transparent p-3 pl-5"
@@ -27,6 +27,7 @@ function Background({ handleInputTodos }) {
 						Add
 					</button>
 				</motion.div>
+
 				<div className="divider container mx-auto"></div>
 				<h1 className="text-9xl fixed z-0 font-mono leading-tight tracking-tighter top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-zinc-900">
 					Docs.

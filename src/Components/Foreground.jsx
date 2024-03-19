@@ -9,7 +9,7 @@ function Foreground({ data }) {
 		<>
 			<div
 				ref={ref}
-				className="text-xl z-30 container pt-16 mx-auto flex gap-5 flex-wrap items-center justify-center h-[90vh]"
+				className="text-xl z-30 container pt-16 mx-auto flex gap-5 flex-wrap items-center justify-center lg:h-[90vh]"
 			>
 				{data &&
 					data.map((todo) => (

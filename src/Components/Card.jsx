@@ -8,6 +8,8 @@ function Card({ todo, reference }) {
 	const todos = {
 		id: todo.id,
 		todo: todo.todo,
+		date: todo.date,
+		time: todo.time,
 		isComplete: isComplete,
 	};
 
@@ -25,7 +27,11 @@ function Card({ todo, reference }) {
 					</span>
 				</h2>
 				<p className="mt-5">{todos.todo}</p>
-				<div className="card-actions justify-end mt-10">
+				<div className="card-actions flex justify-between items-center mt-10">
+					<div className="flex flex-col items-center gap-2">
+						<h1>{todos.date}</h1>
+						<h1>{todos.time}</h1>
+					</div>
 					<button
 						onClick={() => setIsComplete(!isComplete)}
 						className="btn btn-ghost py-2 px-4"
