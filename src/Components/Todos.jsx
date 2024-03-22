@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Todo from "./Todo";
 import Progress from "./Progress";
 import Done from "./Done";
@@ -7,12 +7,25 @@ function Todos() {
 	const [add, setAdd] = useState(false);
 	const [addPro, setAddPro] = useState(false);
 	const [addDone, setAddDone] = useState(false);
-	const [issues, setIssues] = useState([]);
-	const [progressIssue, setProgressIssue] = useState([]);
-	const [doneIssues, setDoneIssues] = useState([]);
+
+	const [issues, setIssues] = useState(
+		JSON.parse(localStorage.getItem("issues"))?.todo?.length > 0
+			? JSON.parse(localStorage.getItem("issues")).todo
+			: []
+	);
+	const [progressIssue, setProgressIssue] = useState(
+		JSON.parse(localStorage.getItem("issues"))?.progressIssue?.length > 0
+			? JSON.parse(localStorage.getItem("issues")).progressIssue
+			: []
+	);
+	const [doneIssues, setDoneIssues] = useState(
+		JSON.parse(localStorage.getItem("issues"))?.doneIssues?.length > 0
+			? JSON.parse(localStorage.getItem("issues")).doneIssues
+			: []
+	);
 
 	// Add an issue
-	const handleAddIssue = (e) => {
+	const handleAddIssue = async (e) => {
 		e.preventDefault();
 		const lines = e.target.issue.value
 			.split("\n")
@@ -22,8 +35,7 @@ function Todos() {
 		e.target.issue.value
 			? (setIssues([...issues, `${issue}`]), setAdd(false))
 			: alert("Input an issue");
-		hold();
-		console.log(issues);
+		issues && hold();
 	};
 
 	// Add to progress bar
@@ -91,7 +103,7 @@ function Todos() {
 		setAddDone(b);
 	};
 
-	const hold = useCallback(() => {
+	const hold = useEffect(() => {
 		localStorage.setItem(
 			"issues",
 			JSON.stringify({

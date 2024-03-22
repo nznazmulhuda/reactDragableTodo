@@ -12,6 +12,7 @@ function Todo({
 	issues,
 	handleAddToProgress,
 	handleAddToDone,
+	addIssueOnChange
 }) {
 	return (
 		<>
@@ -68,6 +69,7 @@ function Todo({
 						>
 							<div className="w-full relative border rounded-lg">
 								<textarea
+								onChange={addIssueOnChange}
 									type="text"
 									name="issue"
 									className="bg-transparent py-2 px-3 w-[95%] text-sm placeholder:text-xs outline-none whitespace-pre-wrap resize-none"
@@ -98,6 +100,7 @@ function Todo({
 
 Todo.propTypes = {
 	handleAddButton: PropTypes.func,
+	addIssueOnChange: PropTypes.func,
 	handleAddIssue: PropTypes.func,
 	handleAddToProgress: PropTypes.func,
 	handleAddToDone: PropTypes.func,
