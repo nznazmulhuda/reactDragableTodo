@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Todo from "./Todo";
 import Progress from "./Progress";
 import Done from "./Done";
@@ -22,16 +22,37 @@ function Todos() {
 		e.target.issue.value
 			? (setIssues([...issues, `${issue}`]), setAdd(false))
 			: alert("Input an issue");
+		hold();
+		console.log(issues);
 	};
 
-	// Hide and Visible Creat issue and issue field
-	const handleAddButton = (b) => {
-		setAdd(b);
+	// Add to progress bar
+	const handleProgress = (e) => {
+		e.preventDefault();
+		const lines = e.target.issue.value
+			.split("\n")
+			.filter((line) => line.trim() !== "");
+		const issue = lines.join("\n");
+
+		e.target.issue.value
+			? (setProgressIssue([...progressIssue, `${issue}`]),
+			  setAddPro(false))
+			: alert("Input an issue");
+		hold();
 	};
 
-	// Hide and Visible Creat issue and issue field
-	const handleAddButtonPro = (b) => {
-		setAddPro(b);
+	// Add done issue
+	const handleAddDoneIssue = (e) => {
+		e.preventDefault();
+		const lines = e.target.issue.value
+			.split("\n")
+			.filter((line) => line.trim() !== "");
+		const issue = lines.join("\n");
+
+		e.target.issue.value
+			? (setDoneIssues([...doneIssues, `${issue}`]), setAddDone(false))
+			: alert("Input an issue");
+		hold();
 	};
 
 	// Add to TODO bar
@@ -48,25 +69,6 @@ function Todos() {
 		setProgressIssue([...progressIssue, issue]);
 	};
 
-	// Add to progress bar
-	const handleProgress = (e) => {
-		e.preventDefault();
-		const lines = e.target.issue.value
-			.split("\n")
-			.filter((line) => line.trim() !== "");
-		const issue = lines.join("\n");
-
-		e.target.issue.value
-			? (setProgressIssue([...progressIssue, `${issue}`]),
-			  setAddPro(false))
-			: alert("Input an issue");
-	};
-
-	// Show done field
-	const handleShowDoneField = (b) => {
-		setAddDone(b);
-	};
-
 	// Add to done bar
 	const handleAddToDone = (issue) => {
 		setIssues(issues.filter((is) => is !== issue));
@@ -74,23 +76,37 @@ function Todos() {
 		setDoneIssues([...doneIssues, issue]);
 	};
 
-	// Add done issue
-	const handleAddDoneIssue = (e) => {
-		e.preventDefault();
-		const lines = e.target.issue.value
-			.split("\n")
-			.filter((line) => line.trim() !== "");
-		const issue = lines.join("\n");
-
-		e.target.issue.value
-			? (setDoneIssues([...doneIssues, `${issue}`]), setAddDone(false))
-			: alert("Input an issue");
+	// Hide and Visible Creat issue and issue field
+	const handleAddButton = (b) => {
+		setAdd(b);
 	};
+
+	// Hide and Visible Creat issue and issue field
+	const handleAddButtonPro = (b) => {
+		setAddPro(b);
+	};
+
+	// Show done field
+	const handleShowDoneField = (b) => {
+		setAddDone(b);
+	};
+
+	const hold = useCallback(() => {
+		localStorage.setItem(
+			"issues",
+			JSON.stringify({
+				todo: issues,
+				progressIssue: progressIssue,
+				doneIssues: doneIssues,
+			})
+		);
+		console.log("add");
+	}, [issues, progressIssue, doneIssues]);
 
 	return (
 		<>
-			<div className="container mx-auto flex justify-between gap-3 mt-20">
-				<div className="w-[33%]">
+			<div className="container mx-auto flex justify-center lg:justify-between flex-col lg:flex-row items-center gap-3 mt-20">
+				<div className="w-full lg:w-[33%]">
 					<Todo
 						handleAddButton={handleAddButton}
 						handleAddIssue={handleAddIssue}
@@ -101,7 +117,7 @@ function Todos() {
 					/>
 				</div>
 
-				<div className="w-[33%]">
+				<div className="w-full lg:w-[33%]">
 					<Progress
 						handleToDo={handleToDo}
 						handleAddButtonPro={handleAddButtonPro}
@@ -112,7 +128,7 @@ function Todos() {
 					/>
 				</div>
 
-				<div className="w-[33%]">
+				<div className="w-full lg:w-[33%]">
 					<Done
 						doneIssues={doneIssues}
 						handleAddToProgress={handleAddToProgress}
